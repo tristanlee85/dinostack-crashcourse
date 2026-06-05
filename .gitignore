@@ -34,3 +34,14 @@ node_modules/
 # config and belong in source control.
 !.agentic/session-log/
 !.agentic/session-log/**
+
+# Additional .agentic runtime artifacts (runtime/per-developer state, must not be committed).
+.agentic/brief-session.json
+.agentic/learnings.md
+.agentic/qa-regressions.md
+
+# Next.js build outputs
+/.next/
+/out/
+next-env.d.ts
+*.tsbuildinfo
