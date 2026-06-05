@@ -1,25 +1,14 @@
 # iridium-crashcourse
 
-<!-- TODO: Add one-paragraph description -->
+Iridium Reading Room - a small Next.js onboarding app that teaches engineers to use the iridium framework via three forked tier exercises.
 
 ## Activation
-<!--
-  agentic-engineering governs how work is done in this project.
-  Run /agentic-status to see the resolved mode, profile, and whether it is active here.
-
-  This project is ACTIVE by default. To turn it off for this project only,
-  uncomment the marker line just below this block.
--->
-<!-- agentic-engineering: opt-out -->
-
-<!--
-  Optional review strictness: relaxed | default | strict.
-  Uncomment the line below to override the global setting for this project.
--->
-<!-- agentic-engineering-profile: default -->
+agentic-engineering: opt-in
 
 ## Decisions
-- <!-- Resolved architecture decisions as brief bullets - fill in as the project takes shape. -->
+- Stack: Next.js 16 / React 19 / TypeScript 5 (strict) / Tailwind v4 / ESLint 9 (held at 9 because eslint-config-next@16 breaks on ESLint 10).
+- Mock-data-only - no backend, no database; local seed data plus React state.
+- Three-branch onboarding model: `intro`, `intermediate`, `advanced`, each a tier exercise forked from `main`.
 
 ## Tools
 - GitHub operations: use `gh` CLI - do not use GitHub MCP
@@ -32,13 +21,7 @@
 
 ## Conventions
 - **Glossary** - see `glossary.md` for the project's domain terms (Ubiquitous Language).
-- <!-- TODO: Add project conventions as they emerge -->
-
-## PR Workflow
-# Uncomment and fill in Reviewers: only if you have NO CODEOWNERS file and want
-# automatic reviewer assignment when /implement-ticket marks a PR ready for review.
-# CODEOWNERS (at .github/CODEOWNERS, docs/CODEOWNERS, or repo root) takes precedence.
-# Reviewers: github-user-1, github-user-2
+- Engineer-facing prose uses iridium branding with the real current command names (`/brief`, `/implement-ticket`, `/skeptic`, etc.) and no em dashes.
 
 ## Session start
 - On the first interaction of a new session, silently check that `/init-project` scaffolding exists. Check each item only if its precondition holds:
