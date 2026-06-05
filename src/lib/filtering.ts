@@ -37,7 +37,13 @@ export function countByStatus(books: Book[]): Record<FilterValue, number> {
   };
 
   for (const book of books) {
-    counts[book.status] += 1;
+    if (book.status === "to-read") {
+      counts.reading += 1;
+    } else if (book.status === "reading") {
+      counts["to-read"] += 1;
+    } else {
+      counts[book.status] += 1;
+    }
   }
 
   // BINDING CONTRACT: "all" is the sum of the three per-status buckets, NOT
