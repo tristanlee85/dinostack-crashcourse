@@ -1,3 +1,6 @@
+import { BookList } from "@/components/BookList";
+import { books } from "@/lib/books";
+
 export default function Home() {
   return (
     <section className="space-y-6">
@@ -9,16 +12,7 @@ export default function Home() {
         </p>
       </div>
 
-      {/*
-        U4 wires the reading list here:
-          import { BookList } from "@/components/BookList";
-          import { books } from "@/lib/books";
-          ...
-          <BookList books={books} />
-      */}
-      <div className="rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center text-sm text-slate-500">
-        The reading list will appear here.
-      </div>
+      <BookList books={books} />
     </section>
   );
 }
