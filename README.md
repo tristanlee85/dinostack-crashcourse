@@ -62,7 +62,7 @@ holds 9 books split across three reading statuses (`to-read`, `reading`, `finish
 One-liner install (quickest):
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Solara6/agentic-engineering/main/bootstrap.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Space-Dinosaurs/agentic-engineering/main/bootstrap.sh | bash
 ```
 
 This clones the repo into `agentic-engineering/` inside your current directory, runs the
@@ -74,14 +74,14 @@ bootstrap script automatically falls back to SSH; if you prefer to run the SSH p
 directly:
 
 ```bash
-git clone git@github.com:Solara6/agentic-engineering.git && cd agentic-engineering && bash bootstrap.sh
+git clone git@github.com:Space-Dinosaurs/agentic-engineering.git && cd agentic-engineering && bash bootstrap.sh
 ```
 
 **Custom install location:** set `AE_DEST_DIR` before running to install somewhere other
 than the current directory (the default is `<current directory>/agentic-engineering`):
 
 ```bash
-AE_DEST_DIR=~/tools/agentic-engineering curl -fsSL https://raw.githubusercontent.com/Solara6/agentic-engineering/main/bootstrap.sh | bash
+AE_DEST_DIR=~/tools/agentic-engineering curl -fsSL https://raw.githubusercontent.com/Space-Dinosaurs/agentic-engineering/main/bootstrap.sh | bash
 ```
 
 The installer requires `git` and `python3`; `node` is optional at install time (it is only
@@ -317,14 +317,11 @@ yours.
 
 ## Fork and clone
 
-> **Hosting is pending.** This repo does not yet have a public home, so the URL below is a
-> placeholder. Replace it with the real repository URL once hosting is set up - every spot
-> that needs a real URL is flagged the same way.
-
-Fork the repository to your own account, then clone your fork:
+Fork the canonical repository at https://github.com/tristanlee85/iridium-crashcourse to your
+own account, then clone your fork:
 
 ```bash
-git clone [PLACEHOLDER: GITHUB_REPO_URL]
+git clone git@github.com:<your-username>/iridium-crashcourse.git
 cd iridium-crashcourse
 ```
 
