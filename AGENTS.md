@@ -1,6 +1,6 @@
-# iridium-crashcourse
+# dinostack-crashcourse
 
-Iridium Reading Room - a small Next.js onboarding app that teaches engineers to use the iridium framework via three forked tier exercises.
+DinoStack Reading Room - a small Next.js onboarding app that teaches engineers to use the dinostack framework via three forked tier exercises.
 
 ## Activation
 agentic-engineering: opt-in
@@ -21,7 +21,7 @@ agentic-engineering: opt-in
 
 ## Conventions
 - **Glossary** - see `glossary.md` for the project's domain terms (Ubiquitous Language).
-- Engineer-facing prose uses iridium branding with the real current command names (`/brief`, `/implement-ticket`, `/skeptic`, etc.) and no em dashes.
+- Engineer-facing prose uses dinostack branding with the real current command names (`/brief`, `/implement-ticket`, `/skeptic`, etc.) and no em dashes.
 
 ## Session start
 - On the first interaction of a new session, silently check that `/init-project` scaffolding exists. Check each item only if its precondition holds:

@@ -1,7 +1,7 @@
-# Iridium Onboarding Crashcourse
+# DinoStack Onboarding Crashcourse
 
-A hands-on, low-stakes way to learn to drive the **iridium** framework for AI-assisted
-development. You fork this repo, install iridium, and work through three graduated
+A hands-on, low-stakes way to learn to drive the **dinostack** framework for AI-assisted
+development. You fork this repo, install dinostack, and work through three graduated
 exercises in a paired-programming session - you and your AI agent, side by side. There is
 no autograder and no score. Success is observation-based: you (and whoever you are pairing
 with) judge whether each outcome is acceptable on your own terms.
@@ -18,7 +18,7 @@ deciding what to build and how you will know it works. The agent can write a lot
 fast; that is exactly why a vague request produces a lot of confidently-wrong code fast.
 
 Authoring the spec up front - the problem, the success criteria, the constraints, and how
-you will verify the result - is the habit that most determines output quality. iridium is
+you will verify the result - is the habit that most determines output quality. dinostack is
 built around this idea: the `/brief` command opens a planning dialogue before any code is
 written, and the rest of the workflow holds the implementation accountable to that spec.
 
@@ -33,7 +33,7 @@ from a blank page, and understand why the spec is worth writing.
 
 ## What you will build
 
-The sample app is the **Iridium Reading Room** - a small personal reading-list tracker. It
+The sample app is the **DinoStack Reading Room** - a small personal reading-list tracker. It
 is mock-data-only: there is no backend and no database, just local seed data and React
 state. The app exists only to host the exercises; it is not a product you are shipping.
 
@@ -47,25 +47,21 @@ holds 9 books split across three reading statuses (`to-read`, `reading`, `finish
   has reached end-of-life. Do not run this on Node 18.
 - **npm 10+** - bundled with Node 20+, so installing a current Node gives you a compatible
   npm automatically.
-- **Claude Code**, or another supported adapter tool. iridium ships adapters for Cursor,
-  Codex CLI, Gemini CLI, Kimi Code CLI, OpenCode, Pi, oh-my-pi, and Hermes. See the iridium
+- **Claude Code**, or another supported adapter tool. dinostack ships adapters for Cursor,
+  Codex CLI, Gemini CLI, Kimi Code CLI, OpenCode, Pi, oh-my-pi, and Hermes. See the dinostack
   framework README for the full adapter list and per-tool setup.
 - **git** - to fork, clone, and check out the tier branches.
-- **python3** - the iridium installer uses it for path resolution and config writes.
+- **python3** - the dinostack installer uses it for path resolution and config writes.
 
-## Install iridium
-
-> **Naming note:** the framework is being renamed to iridium, but the install still pulls
-> from the `agentic-engineering` repository until the rename ships. The commands below use
-> the current repository name on purpose - they are the real, working install steps.
+## Install dinostack
 
 One-liner install (quickest):
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Space-Dinosaurs/agentic-engineering/main/bootstrap.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Space-Dinosaurs/DinoStack/main/bootstrap.sh | bash
 ```
 
-This clones the repo into `agentic-engineering/` inside your current directory, runs the
+This clones the repo into `DinoStack/` inside your current directory, runs the
 installer, and records the install path in `~/.agentic/agentic-engineering-config.json` so
 the updater and the `/update-agentic-engineering` command know where to find it.
 
@@ -74,22 +70,22 @@ bootstrap script automatically falls back to SSH; if you prefer to run the SSH p
 directly:
 
 ```bash
-git clone git@github.com:Space-Dinosaurs/agentic-engineering.git && cd agentic-engineering && bash bootstrap.sh
+git clone git@github.com:Space-Dinosaurs/DinoStack.git && cd DinoStack && bash bootstrap.sh
 ```
 
 **Custom install location:** set `AE_DEST_DIR` before running to install somewhere other
-than the current directory (the default is `<current directory>/agentic-engineering`):
+than the current directory (the default is `<current directory>/DinoStack`):
 
 ```bash
-AE_DEST_DIR=~/tools/agentic-engineering curl -fsSL https://raw.githubusercontent.com/Space-Dinosaurs/agentic-engineering/main/bootstrap.sh | bash
+AE_DEST_DIR=~/tools/DinoStack curl -fsSL https://raw.githubusercontent.com/Space-Dinosaurs/DinoStack/main/bootstrap.sh | bash
 ```
 
 The installer requires `git` and `python3`; `node` is optional at install time (it is only
 needed later for the updater's interactive UI).
 
-## Activate iridium for this project
+## Activate dinostack for this project
 
-iridium has two global activation modes, chosen at install time and stored in
+dinostack has two global activation modes, chosen at install time and stored in
 `~/.claude/agentic-engineering.json`:
 
 - **opt-out (default)** - the methodology is active in every project unless that project's
@@ -119,16 +115,16 @@ It reports the resolved mode, the project marker, and the active profile.
 
 Agents need uninterrupted access to Bash, Edit, and Write. Constant permission prompts
 break the agent's flow, and - importantly for this crashcourse - they cause subagents to
-stall, because a backgrounded worker cannot answer a prompt. The iridium installer offers
+stall, because a backgrounded worker cannot answer a prompt. The dinostack installer offers
 to configure `bypassPermissions` mode in `~/.claude/settings.json`, pairing an allow list
 for routine tools with a deny list for destructive commands.
 
 Accept that setup when prompted. For the exact allow list, deny list, and additional
-directories, see the **Recommended permissions** section of the iridium framework README.
+directories, see the **Recommended permissions** section of the dinostack framework README.
 
 ## The mental model: conductor, worker, skeptic
 
-iridium runs as a small team of roles. Understanding these three is enough to follow what
+dinostack runs as a small team of roles. Understanding these three is enough to follow what
 your agent narrates as it works.
 
 - **Conductor** - the main agent you talk to. It does not implement work directly. It
@@ -312,17 +308,17 @@ books); the intermediate and advanced tiers are more open, and "good enough" is 
 call you make.
 
 The point is not to satisfy a grader. It is to practice spec-first planning and to build a
-feel for driving iridium end-to-end, so that the judgment of what "done" means becomes
+feel for driving dinostack end-to-end, so that the judgment of what "done" means becomes
 yours.
 
 ## Fork and clone
 
-Fork the canonical repository at https://github.com/tristanlee85/iridium-crashcourse to your
+Fork the canonical repository at https://github.com/tristanlee85/dinostack-crashcourse to your
 own account, then clone your fork:
 
 ```bash
-git clone git@github.com:<your-username>/iridium-crashcourse.git
-cd iridium-crashcourse
+git clone git@github.com:<your-username>/dinostack-crashcourse.git
+cd dinostack-crashcourse
 ```
 
 Forking (rather than cloning the upstream directly) gives you a personal copy you can push
@@ -331,11 +327,13 @@ they copy to your fork automatically.
 
 ## Where to learn more
 
-- The **iridium framework README** (in the `agentic-engineering` repository you installed
-  from) - the full command reference, the complete recommended-permissions setup, the
-  adapter list, and the deeper protocol docs.
-- `/agentic-help` - a zero-token, static reference listing every iridium slash command.
-- `/agentic-status` - reports how iridium is currently activated in this project.
+- The [**DinoStack documentation**](https://docs.dinostack.ai) - the full command
+  reference, the complete recommended-permissions setup, the adapter list, and the deeper
+  protocol docs.
+- The **DinoStack framework README** (in the `DinoStack` repository you installed from) -
+  the same reference material, alongside the source.
+- `/agentic-help` - a zero-token, static reference listing every dinostack slash command.
+- `/agentic-status` - reports how dinostack is currently activated in this project.
 - This repo's own `glossary.md` - the domain terms used in the Reading Room app. The
-  iridium role terms (conductor, worker, skeptic) are defined in the mental-model section
+  dinostack role terms (conductor, worker, skeptic) are defined in the mental-model section
   above.

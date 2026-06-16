@@ -1,12 +1,12 @@
 # TASK: Fix the filter-count mismatch on the Reading List
 
 > Tier: intro. This is a complete Brief - the spec is finished. Your job is to run
-> it through the iridium workflow and fix the bug, not to author the spec. Read it
+> it through the dinostack workflow and fix the bug, not to author the spec. Read it
 > top to bottom, reproduce the bug in the running app, then start the workflow.
 
 ## Problem
 
-On the home page (`/`) of the Iridium Reading Room, the filter-tab badges do not
+On the home page (`/`) of the DinoStack Reading Room, the filter-tab badges do not
 match the books actually shown. Each tab has a small count badge next to its label,
 and that count is supposed to tell you how many books fall under that status. Right
 now two of those badges lie.
