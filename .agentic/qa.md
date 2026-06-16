@@ -1,4 +1,4 @@
-# QA Notes - Iridium Reading Room
+# QA Notes - DinoStack Reading Room
 
 Project-specific knowledge for QA runs. Read this before booting the app.
 

@@ -1,6 +1,6 @@
 # Intermediate exercise: Add a book via Open Library search
 
-This is the **intermediate** tier of the Iridium Reading Room crashcourse. It exercises the
+This is the **intermediate** tier of the DinoStack Reading Room crashcourse. It exercises the
 **feature / integration** flow: you take a real third-party API, wire it into the existing app,
 and ship the feature behind a spec you finish authoring yourself.
 
@@ -9,7 +9,7 @@ they are the binding parts of the spec. The section under "You decide (author th
 lists the gaps you must close before you implement. Closing those gaps is the point of this tier:
 you practice spec-first planning on a feature that is realistic but small.
 
-> New to the workflow? Read the root `README.md` first. It covers iridium install, activation,
+> New to the workflow? Read the root `README.md` first. It covers dinostack install, activation,
 > and the `/brief` -> `/implement-ticket` -> `/skeptic` loop. Then come back here.
 
 ---
@@ -82,7 +82,7 @@ interface Book {
 ### Module-manifest constraint (binding)
 
 `src/lib/openlibrary.ts` performs a network call, so it is a **side-effecting network-I/O module**.
-Per this project's convention (see `content/rules/module-manifest.md` in the iridium install, and the
+Per this project's convention (see `content/rules/module-manifest.md` in the dinostack install, and the
 existing manifest header at the top of `src/lib/filtering.ts` for the house style), this file **must
 carry a six-field module-manifest header**:
 
