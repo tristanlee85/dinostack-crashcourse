@@ -1,7 +1,7 @@
 import type { Book } from "@/lib/types";
 
 /**
- * Seed library for the Iridium Reading Room.
+ * Seed library for the DinoStack Reading Room.
  *
  * Distribution is a binding contract: exactly 9 books split
  * 4 "to-read" / 3 "reading" / 2 "finished". This split is load-bearing -
