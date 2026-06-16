@@ -1,7 +1,7 @@
 {
-  "name": "iridium-crashcourse",
+  "name": "dinostack-crashcourse",
   "version": "1.0.0",
-  "description": "Iridium Reading Room - a spec-first onboarding crashcourse app.",
+  "description": "DinoStack Reading Room - a spec-first onboarding crashcourse app.",
   "private": true,
   "type": "module",
   "engines": {
