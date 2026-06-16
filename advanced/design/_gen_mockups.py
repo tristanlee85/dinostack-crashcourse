@@ -119,7 +119,7 @@ def build_desktop(path):
     # app shell header bar
     d.rectangle([0, 28, W, 92], fill=SURFACE)
     d.line([0, 92, W, 92], fill=BORDER, width=1)
-    d.text((144, 50), "Iridium Reading Room", font=font(20, bold=True), fill=TEXT_PRIMARY)
+    d.text((144, 50), "DinoStack Reading Room", font=font(20, bold=True), fill=TEXT_PRIMARY)
     d.text((W - 320, 54), "Reading List", font=font(15), fill=TEXT_SECONDARY)
     d.text((W - 180, 54), "Discover", font=font(15, bold=True), fill=TEXT_PRIMARY)
     # content container max-w-6xl centered (1152), px-6
@@ -152,7 +152,7 @@ def build_mobile(path):
     # app shell header
     d.rectangle([0, 28, W, 80], fill=SURFACE)
     d.line([0, 80, W, 80], fill=BORDER, width=1)
-    d.text((16, 46), "Iridium Reading Room", font=font(15, bold=True), fill=TEXT_PRIMARY)
+    d.text((16, 46), "DinoStack Reading Room", font=font(15, bold=True), fill=TEXT_PRIMARY)
     cx = 16
     cw = W - 32
     hb = header_block(d, cx, 100, cw, font(11, bold=True), font(26, bold=True),
