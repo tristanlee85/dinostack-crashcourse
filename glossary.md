@@ -9,8 +9,8 @@ The Ubiquitous Language for this project - the domain terms the team and any LLM
 
 - **Book** - the single domain entity in the Reading Room: a record with a title, author, and reading status.
 - **ReadingStatus** - a Book's state; one of `to-read`, `reading`, or `finished`.
-- **Reading Room** - the sample app itself ("Iridium Reading Room"), a personal reading-list tracker built on `main`.
+- **Reading Room** - the sample app itself ("DinoStack Reading Room"), a personal reading-list tracker built on `main`.
 - **Tier** - a difficulty level and exercise branch: one of `intro`, `intermediate`, or `advanced`.
 - **TASK.md** - the per-branch exercise spec a learner works from, shipped at a graduated level of detail on each Tier branch.
 
-Iridium role terms (Conductor / Worker / Skeptic) are defined in the README mental-model section.
+DinoStack role terms (Conductor / Worker / Skeptic) are defined in the README mental-model section.

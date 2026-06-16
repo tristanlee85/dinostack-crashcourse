@@ -14,7 +14,7 @@ hero/search header at the top, and a responsive grid of featured book cards
 below it. Each card shows a cover swatch, title, author, and a row of
 category/tag chips.
 
-This screen extends the existing Iridium Reading Room visual language (the
+This screen extends the existing DinoStack Reading Room visual language (the
 slate-neutral palette and the rounded card style already used on the home page
 and in `BookCard.tsx`). It is read-only browsing: there is no add-to-list wiring
 required for this exercise. The search input is presentational (it filters the
@@ -45,7 +45,7 @@ if the spec author chooses to keep scope tight).
 ```
 
 - The page content lives inside the existing app shell from `layout.tsx`
-  (header "Iridium Reading Room" with nav, and a centered `main` container).
+  (header "DinoStack Reading Room" with nav, and a centered `main` container).
 - The existing `main` wrapper is `max-w-4xl` (56rem / 896px). For this richer
   Discover screen, widen the content container to **`max-w-6xl` (72rem /
   1152px)** so the desktop grid has room for three columns. Achieve this by
