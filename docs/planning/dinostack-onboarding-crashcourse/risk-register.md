@@ -1,4 +1,4 @@
-# Risk Register: iridium Onboarding Crashcourse
+# Risk Register: DinoStack Onboarding Crashcourse
 
 Greenfield repo, no production or shared state, fully reversible (every unit is a branch). The dominant risks are toolchain-correctness and sequencing, not data or availability.
 
