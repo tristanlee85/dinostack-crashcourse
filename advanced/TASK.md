@@ -27,13 +27,13 @@ read the design, then write the Brief that turns it into a plan.
    npm run dev
    ```
    then open `/discover`.
-4. Author your own Brief from this problem statement:
-   ```
-   /brief
-   ```
-   Decide the success criteria, non-goals, constraints, and how you will verify
-   the screen matches the design. The design spec gives you everything you need
-   to write a precise Brief.
+4. Author your own Brief from this problem statement. Decide the success criteria,
+   non-goals, constraints, and how you will verify the screen matches the design -
+   the design spec gives you everything you need to write a precise Brief. When you
+   start the next step with `/implement-ticket`, the conductor opens a planning
+   dialogue and walks you through authoring that Brief. If you would rather drive the
+   spec dialogue explicitly before implementing, you can open it yourself with
+   `/brief` - but you do not have to; the workflow will prompt you for the plan.
 5. Implement against your Brief:
    ```
    /implement-ticket

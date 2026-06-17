@@ -1,21 +1,21 @@
-# Architect Plan: iridium Onboarding Crashcourse
+# Architect Plan: DinoStack Onboarding Crashcourse
 
-> Companion to the Brief at `docs/planning/iridium-onboarding-crashcourse.md`. Revised after Skeptic round 1 (2 Critical, 4 Major, 3 Minor resolved). Pending Skeptic round-2 sign-off.
+> Companion to the Brief at `docs/planning/dinostack-onboarding-crashcourse.md`. Revised after Skeptic round 1 (2 Critical, 4 Major, 3 Minor resolved). Pending Skeptic round-2 sign-off.
 
 ## Approach
 
-Build one small Next.js (App Router) + TypeScript app - a personal Reading List / "To-Read" tracker ("Iridium Reading Room") - on `main`, then fork three independent tier branches (`intro`, `intermediate`, `advanced`) off that base, each carrying exactly one `TASK.md` at a graduated spec level (full Brief / partial Brief / problem statement only). The app concept hosts a visible bug (a broken filter/count in the list UI), a natural feature/integration (enrich a book via the public, no-auth Open Library API), and a credible design-to-code target (a styled "Discover/Browse" screen implementable from committed screenshots, with an optional Figma-MCP enhanced path).
+Build one small Next.js (App Router) + TypeScript app - a personal Reading List / "To-Read" tracker ("DinoStack Reading Room") - on `main`, then fork three independent tier branches (`intro`, `intermediate`, `advanced`) off that base, each carrying exactly one `TASK.md` at a graduated spec level (full Brief / partial Brief / problem statement only). The app concept hosts a visible bug (a broken filter/count in the list UI), a natural feature/integration (enrich a book via the public, no-auth Open Library API), and a credible design-to-code target (a styled "Discover/Browse" screen implementable from committed screenshots, with an optional Figma-MCP enhanced path).
 
 ## Codebase context
 
-- The Brief is authoritative. It pre-decides structure (3 branches), archetype->tier mapping, stack, graduated spec model, in-repo `TASK.md` delivery, observation-based success (no autograder), iridium branding with real command names, and the Figma baseline-plus-optional-MCP rule.
+- The Brief is authoritative. It pre-decides structure (3 branches), archetype->tier mapping, stack, graduated spec model, in-repo `TASK.md` delivery, observation-based success (no autograder), dinostack branding with real command names, and the Figma baseline-plus-optional-MCP rule.
 - Overview docs (`docs/overview/vision.md`, `requirements.md`) are unfilled operator-owned stubs; treat the Brief as intent, propose no edits.
 - Repo is near-empty greenfield: single commit (the Brief), no git remote, only `main`. `package.json` is a default `npm init` CommonJS stub to be fully rewritten. `.gitignore` already covers `node_modules/`, `.env*`, `.DS_Store`, `.agentic/`. `AGENTS.md` has an empty `## Activation` section - needs `agentic-engineering: opt-in` so the framework activates for a forking engineer.
-- iridium install/workflow verified from source:
-  - Install one-liner (from `bootstrap.sh` + `README.md`): `curl -fsSL https://raw.githubusercontent.com/Solara6/agentic-engineering/main/bootstrap.sh | bash`. Clones to `./agentic-engineering`, runs `.claude/install.sh`, records path in `~/.agentic/agentic-engineering-config.json`. Requires `git` + `python3`; `node` optional. Repo is currently private -> SSH fallback: `git clone git@github.com:Solara6/agentic-engineering.git && cd agentic-engineering && bash bootstrap.sh`.
+- dinostack install/workflow verified from source:
+  - Install one-liner (from `bootstrap.sh` + `README.md`): `curl -fsSL https://docs.dinostack.ai/install.sh | bash`. Repo is PUBLIC at https://github.com/Space-Dinosaurs/DinoStack; default install dir `DinoStack/`, records path in `~/.agentic/agentic-engineering-config.json`. Requires `git` + `python3`; `node` optional. SSH alternative: `git clone git@github.com:Space-Dinosaurs/DinoStack.git`.
   - Activation: global `opt-out` (default) vs `opt-in` in `~/.claude/agentic-engineering.json`; per-project marker `agentic-engineering: opt-in` in root `AGENTS.md`.
   - Recommended permissions: `bypassPermissions` with documented allow/deny lists.
-  - Workflow taught: `/brief` -> `/implement-ticket` -> `/skeptic`. Conductor/Worker/Skeptic roles and Trivial/Low/Elevated risk classification.
+  - Workflow taught: the `/implement-ticket` loop (the conductor auto-runs `/brief` for planning and `/skeptic` for review based on risk). Conductor/Worker/Skeptic roles and Trivial/Low/Elevated risk classification.
 - Tooling target (verified via `npm view` on 2026-06-04): **Next.js 16.2.7** (App Router) + **React 19.2.7** + **TypeScript ^5** (strict) + **Tailwind CSS v4 (4.3.0)** + **ESLint 9.39.4**. Node 20.9+ required (`next@16` `engines.node: ">=20.9.0"`; Node 18 is EOL). Local Node is v24.14.0 / npm 11.9.0, satisfying this. **ESLint is held at the 9.x line on purpose:** `eslint-config-next@16.2.7` is incompatible with ESLint 10.x (its bundled `eslint-plugin-react` calls `context.getFilename()`, removed in ESLint 10 - reproduced as a hard `TypeError` on every lint run), and the eslint-config-next `eslint` peer is `>=9.0.0`. `^9` is the latest-resolving version the chosen Next 16 lint config actually supports; this is not a downgrade-to-make-an-old-command-work, it is matching the config package's real support window.
 
 ## Data model
@@ -36,7 +36,7 @@ interface Book {
 
 - **Seed: exactly 9 books** in `src/lib/books.ts` (mock, committed; no fetching on base `main`). The distribution across `status` is **fixed and load-bearing for the intro bug to be visible**: **4 `to-read`, 3 `reading`, 2 `finished`**. The bug (planted only on `intro`) is a `countByStatus` status-key swap between `to-read` and `reading`; it is silently invisible unless the seed contains both `to-read` and `reading` books, so this distribution is a binding contract on `main`, not a Worker choice. (See the augmented intro task entry below for the exact pre-fix badge-vs-grid numbers QA scenario 2 verifies.)
 - Intermediate tier introduces `OpenLibraryDoc` + a fetch helper (the feature the engineer builds); base `main` does not ship it.
-- **Glossary scope decision:** `glossary.md` holds the **app/domain** Ubiquitous Language only - `Book`, `ReadingStatus` (`to-read`/`reading`/`finished`), `Reading Room` (the app), `Tier` (intro/intermediate/advanced), `TASK.md`. The **iridium-role terms** (`Conductor`, `Worker`, `Skeptic`) and `Discover` (the advanced-tier screen) live in the README mental-model section / route table **by design**, not in `glossary.md`. Rationale: the glossary is the binding domain vocabulary agents use in *this repo's code*; the role terms are methodology vocabulary the README *teaches the reader*, and `Discover` is a screen name documented at its point of use. `glossary.md` carries a one-line pointer: "Iridium role terms (Conductor / Worker / Skeptic) are defined in the README mental-model section."
+- **Glossary scope decision:** `glossary.md` holds the **app/domain** Ubiquitous Language only - `Book`, `ReadingStatus` (`to-read`/`reading`/`finished`), `Reading Room` (the app), `Tier` (intro/intermediate/advanced), `TASK.md`. The **dinostack-role terms** (`Conductor`, `Worker`, `Skeptic`) and `Discover` (the advanced-tier screen) live in the README mental-model section / route table **by design**, not in `glossary.md`. Rationale: the glossary is the binding domain vocabulary agents use in *this repo's code*; the role terms are methodology vocabulary the README *teaches the reader*, and `Discover` is a screen name documented at its point of use. `glossary.md` carries a one-line pointer: "DinoStack role terms (Conductor / Worker / Skeptic) are defined in the README mental-model section."
 
 ## API / interface design (binding contracts)
 
@@ -46,7 +46,7 @@ Base app (`main`) routes (App Router):
 |---|---|---|
 | `/` | `src/app/page.tsx` | Reading list: status-filter tabs + book grid + per-status counts |
 | `/discover` | `src/app/discover/page.tsx` | Placeholder "Discover" screen (advanced-tier design target) |
-| layout | `src/app/layout.tsx` | App shell: header "Iridium Reading Room", nav to `/` and `/discover` |
+| layout | `src/app/layout.tsx` | App shell: header "DinoStack Reading Room", nav to `/` and `/discover` |
 
 Base app components (`src/components/`):
 
@@ -140,12 +140,12 @@ export async function searchOpenLibrary(title: string): Promise<OpenLibraryDoc[]
      ```
      Use the `@tailwindcss/postcss` plugin - NOT `tailwindcss` as a PostCSS plugin (v3 shape -> styleless build under v4).
    - `globals.css` first line: `@import "tailwindcss";` (v4) - NOT the v3 `@tailwind base/components/utilities` triplet.
-   - Keep the iridium button base-layer fix: `@layer base { button, [role="button"] { cursor: pointer; } }`.
+   - Keep the dinostack button base-layer fix: `@layer base { button, [role="button"] { cursor: pointer; } }`.
    - `next.config.ts`: disable `devIndicators`.
 3. Domain + data: `types.ts`, `books.ts` (seed = fixed 4/3/2 distribution), `filtering.ts` (manifest recommended; `all`-by-summation contract above).
 4. Components: `BookCard`, `FilterTabs`, `BookList` (manifest recommended) per contracts.
 5. Wire home page; verify build/dev clean, filtering + counts correct on `main`.
-6. Rewrite root `AGENTS.md` (lean root, <~40 lines): `## Activation` = `agentic-engineering: opt-in`; `## Decisions` (stack, mock-data-only, three-branch model); keep Tools/Docs/Conventions/Session start; conventions note -> `glossary.md`, iridium branding + real command names + no em dashes.
+6. Rewrite root `AGENTS.md` (lean root, <~40 lines): `## Activation` = `agentic-engineering: opt-in`; `## Decisions` (stack, mock-data-only, three-branch model); keep Tools/Docs/Conventions/Session start; conventions note -> `glossary.md`, dinostack branding + real command names + no em dashes.
 7. Replace `glossary.md` stub with real Ubiquitous Language (domain terms only; role-term pointer line).
 8. Update `.gitignore`: add `/.next/`, `/out/`, `next-env.d.ts`, `*.tsbuildinfo`.
 9. Author `README.md` (comprehensive self-contained guide - outline below).
@@ -179,11 +179,11 @@ The defect is observable in the running UI, not a hidden test failure: the "To R
 
 **`intermediate`** - feature/integration (partial Brief ships). Feature: an "Add a book" flow that searches Open Library (`https://openlibrary.org/search.json?title=<q>&limit=5`, no auth, CORS-open) and lets the user pick a result to add with author/year auto-filled. FILLED IN: Problem, endpoint + `OpenLibraryDoc`/`searchOpenLibrary` contract, happy-path Success criteria, and the `openlibrary.ts` module-manifest constraint. LEFT AS GAPS (under a "You decide (author this part of the spec)" heading): loading/empty/error states, UI placement of the Add entry point, debounce vs submit, persistence across reload.
 
-**`advanced`** - design-to-code (problem statement only ships). Target: restyle `/discover` into a polished "Browse / Discover Books" layout (hero/search header, responsive card grid with cover/title/author + category chips). Committed screenshots + written spec are the source of truth. No specific Figma Community file hard-named (URL rot risk); optional MCP path = "use any public reading-app/book-discovery Community file of your choice" with search-term guidance. `advanced/design/` contains `discover-desktop.png`, `discover-mobile.png` (mockups; annotated placeholders acceptable until real mockups exist), `spec.md` (hex values, spacing, typography, grid columns per breakpoint, component inventory, copy), `README.md` (how to read assets + optional Figma-MCP path). TASK.md = single Problem paragraph + "How to start" (checkout advanced, read spec + screenshots, `/brief` to author your own Brief, then `/implement-ticket`).
+**`advanced`** - design-to-code (problem statement only ships). Target: restyle `/discover` into a polished "Browse / Discover Books" layout (hero/search header, responsive card grid with cover/title/author + category chips). Committed screenshots + written spec are the source of truth. No specific Figma Community file hard-named (URL rot risk); optional MCP path = "use any public reading-app/book-discovery Community file of your choice" with search-term guidance. `advanced/design/` contains `discover-desktop.png`, `discover-mobile.png` (mockups; annotated placeholders acceptable until real mockups exist), `spec.md` (hex values, spacing, typography, grid columns per breakpoint, component inventory, copy), `README.md` (how to read assets + optional Figma-MCP path). TASK.md = single Problem paragraph + "How to start" (checkout advanced, read spec + screenshots, then `/implement-ticket` - which opens planning to author your own Brief (`/brief` available as an explicit option)).
 
 ## README outline (16 sections)
 
-1. Title + one-paragraph orientation (what/who/paired-programming observation-based framing). 2. The core lesson: spec-first planning. 3. What you will build (the Reading Room, mock-data-only). 4. **Prerequisites** - **Node 20.9+** (current LTS; required by `next@16`, and Node 18 is EOL - do NOT state "Node 18+"), npm 10+ (bundled with Node 20+), Claude Code or a supported adapter tool, `git`, `python3`. Link the adapter list. Stays aligned with the U1 stack decision; if the Next major changes, this prerequisite changes with it. 5. Install iridium (real `bootstrap.sh` steps, SSH fallback, `AE_DEST_DIR`, config path; callout that install pulls from agentic-engineering until rename). 6. Activate for this project (opt-out vs opt-in; this repo's AGENTS.md carries opt-in; confirm with `/agentic-status`). 7. Recommended permissions (`bypassPermissions` rationale). 8. The mental model (conductor/worker/skeptic at onboarding depth - this is where the role terms are defined). 9. Risk classification briefly (Trivial/Low/Elevated, one table). 10. The command workflow (`/brief`, `/implement-ticket`, `/skeptic`; worked micro-example). 11. How the exercises work (3 branches, graduated spec, any order, independent off `main`). 12. Per-tier "how to start" (intro/intermediate/advanced subsections). 13. Running the app (`npm install`, `npm run dev`, build/lint/typecheck - script names must match `package.json` exactly). 14. A note on "done" (observation-based, no grade). 15. Fork and clone (`[PLACEHOLDER: GITHUB_REPO_URL]`, hosting pending). 16. Where to learn more (iridium docs + framework README).
+1. Title + one-paragraph orientation (what/who/paired-programming observation-based framing). 2. The core lesson: spec-first planning. 3. What you will build (the Reading Room, mock-data-only). 4. **Prerequisites** - **Node 20.9+** (current LTS; required by `next@16`, and Node 18 is EOL - do NOT state "Node 18+"), npm 10+ (bundled with Node 20+), Claude Code or a supported adapter tool, `git`, `python3`. Link the adapter list. Stays aligned with the U1 stack decision; if the Next major changes, this prerequisite changes with it. 5. Install dinostack (real `bootstrap.sh` steps, SSH fallback, `AE_DEST_DIR`, config path; callout that install pulls from agentic-engineering until rename). 6. Activate for this project (opt-out vs opt-in; this repo's AGENTS.md carries opt-in; confirm with `/agentic-status`). 7. Recommended permissions (`bypassPermissions` rationale). 8. The mental model (conductor/worker/skeptic at onboarding depth - this is where the role terms are defined). 9. Risk classification briefly (Trivial/Low/Elevated, one table). 10. The command workflow (two tiers - commands you type: `/implement-ticket`, `/init-project`, `/wrap`; framework-run: `/brief`, `/skeptic`; worked micro-example). 11. How the exercises work (3 branches, graduated spec, any order, independent off `main`). 12. Per-tier "how to start" (intro/intermediate/advanced subsections). 13. Running the app (`npm install`, `npm run dev`, build/lint/typecheck - script names must match `package.json` exactly). 14. A note on "done" (observation-based, no grade). 15. Fork and clone (`[PLACEHOLDER: GITHUB_REPO_URL]`, hosting pending). 16. Where to learn more (dinostack docs + framework README).
 
 README authoring is Elevated (new file, public-facing, decision-driving) - Worker + Skeptic. Its reality-asserting claims are certified in U11.
 
@@ -216,7 +216,7 @@ qa_criteria:
       evidence: Screenshots of two filter states on main showing badge counts matching the rendered book set.
   manual_smoke: >
     A reviewer with no prior context forks the repo, clones it, follows the root README from
-    zero (including iridium install and the opt-in activation step), checks out each tier branch
+    zero (including dinostack install and the opt-in activation step), checks out each tier branch
     in turn, and confirms each exercise is startable unaided and the README renders as a complete
     standalone guide. Acceptance is the reviewer's judgment that the onboarding path is followable;
     there is no automated grade.
@@ -232,7 +232,7 @@ Watch-outs:
 - Branches drift from base if base changes post-fork (fork after `main` is final; note snapshots in commit messages).
 - The intro bug must stay visibly broken (NO failing test shipped on `intro`; `main` ships no test runner at all).
 - Advanced screenshots are themselves build output (spec.md authoritative until real mockups).
-- GitHub URL is a placeholder everywhere; iridium-vs-agentic-engineering naming seam stated explicitly in README.
+- GitHub URL is a placeholder everywhere; dinostack-vs-agentic-engineering naming seam stated explicitly in README.
 - **ESLint major is pinned at `^9` on purpose.** Upgrading to `eslint@^10` breaks the lint toolchain: `eslint-config-next@16`'s bundled `eslint-plugin-react` calls `context.getFilename()`, removed in ESLint 10, throwing `TypeError: contextOrFilename.getFilename is not a function` on every `eslint .` run (reproduced live, 2026-06-04). Do not modernize ESLint past 9 until `eslint-config-next` ships an ESLint-10-compatible release. `eslint-config-next` major must always equal the `next` major.
 - **Tailwind v4, not v3.** PostCSS plugin is `@tailwindcss/postcss`; CSS entry is `@import "tailwindcss";`. The v3 muscle-memory shapes silently produce a styleless build under v4.
 

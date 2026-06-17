@@ -14,13 +14,14 @@ handed to you, so by the advanced tier you are writing it yourself.
 ## The core lesson: spec-first planning
 
 As code generation gets cheaper, the bottleneck moves upstream - from typing the code to
-deciding what to build and how you will know it works. The agent can write a lot of code
-fast; that is exactly why a vague request produces a lot of confidently-wrong code fast.
+deciding what to build and how you will know it works. That is exactly why a vague request
+produces a lot of confidently-wrong code fast.
 
 Authoring the spec up front - the problem, the success criteria, the constraints, and how
 you will verify the result - is the habit that most determines output quality. dinostack is
-built around this idea: the `/brief` command opens a planning dialogue before any code is
-written, and the rest of the workflow holds the implementation accountable to that spec.
+built around this idea: when you start a task with `/implement-ticket`, the framework opens a
+planning dialogue first (it runs `/brief` for you when the work needs a plan), and the rest
+of the workflow holds the implementation accountable to that spec.
 
 The three tiers in this crashcourse graduate how much spec you are given:
 
@@ -47,9 +48,7 @@ holds 9 books split across three reading statuses (`to-read`, `reading`, `finish
   has reached end-of-life. Do not run this on Node 18.
 - **npm 10+** - bundled with Node 20+, so installing a current Node gives you a compatible
   npm automatically.
-- **Claude Code**, or another supported adapter tool. dinostack ships adapters for Cursor,
-  Codex CLI, Gemini CLI, Kimi Code CLI, OpenCode, Pi, oh-my-pi, and Hermes. See the dinostack
-  framework README for the full adapter list and per-tool setup.
+- **Claude Code**, or another supported adapter tool (dinostack ships 9 adapters - see the docs).
 - **git** - to fork, clone, and check out the tier branches.
 - **python3** - the dinostack installer uses it for path resolution and config writes.
 
@@ -58,16 +57,12 @@ holds 9 books split across three reading statuses (`to-read`, `reading`, `finish
 One-liner install (quickest):
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Space-Dinosaurs/DinoStack/main/bootstrap.sh | bash
+curl -fsSL https://docs.dinostack.ai/install.sh | bash
 ```
 
-This clones the repo into `DinoStack/` inside your current directory, runs the
-installer, and records the install path in `~/.agentic/agentic-engineering-config.json` so
-the updater and the `/update-agentic-engineering` command know where to find it.
-
-**The repository is currently private**, so the one-liner's HTTPS clone may fail. The
-bootstrap script automatically falls back to SSH; if you prefer to run the SSH path
-directly:
+This clones the repo, runs the installer, and records the install path in
+`~/.agentic/agentic-engineering-config.json` so the updater can find it later. As a plain
+alternative, you can clone over SSH and run the bootstrap yourself:
 
 ```bash
 git clone git@github.com:Space-Dinosaurs/DinoStack.git && cd DinoStack && bash bootstrap.sh
@@ -77,7 +72,7 @@ git clone git@github.com:Space-Dinosaurs/DinoStack.git && cd DinoStack && bash b
 than the current directory (the default is `<current directory>/DinoStack`):
 
 ```bash
-AE_DEST_DIR=~/tools/DinoStack curl -fsSL https://raw.githubusercontent.com/Space-Dinosaurs/DinoStack/main/bootstrap.sh | bash
+AE_DEST_DIR=~/tools/DinoStack curl -fsSL https://docs.dinostack.ai/install.sh | bash
 ```
 
 The installer requires `git` and `python3`; `node` is optional at install time (it is only
@@ -86,30 +81,18 @@ needed later for the updater's interactive UI).
 ## Activate dinostack for this project
 
 dinostack has two global activation modes, chosen at install time and stored in
-`~/.claude/agentic-engineering.json`:
-
-- **opt-out (default)** - the methodology is active in every project unless that project's
-  root `AGENTS.md` says otherwise.
-- **opt-in** - the methodology is installed but dormant, and only runs in projects whose
-  root `AGENTS.md` carries the opt-in marker.
-
-Per-project activation is a single line in the project's root `AGENTS.md`:
+`~/.claude/agentic-engineering.json`. In **opt-out (default)** the methodology is active in
+every project unless its root `AGENTS.md` says otherwise; in **opt-in** it is dormant and
+only runs in projects whose root `AGENTS.md` carries the opt-in marker:
 
 ```
 agentic-engineering: opt-in
 ```
 
-**This repo already carries that line** - its root `AGENTS.md` has the `opt-in` marker
-under the `## Activation` section, so the framework activates here regardless of which
-global mode you installed.
-
-Confirm activation is working with:
-
-```
-/agentic-status
-```
-
-It reports the resolved mode, the project marker, and the active profile.
+**This repo already carries that line**, so the framework activates here regardless of which
+global mode you installed. Confirm activation with `/agentic-status` - it reports the
+resolved mode, project marker, and active profile. For depth, see
+https://docs.dinostack.ai#config .
 
 ## Recommended permissions
 
@@ -117,59 +100,61 @@ Agents need uninterrupted access to Bash, Edit, and Write. Constant permission p
 break the agent's flow, and - importantly for this crashcourse - they cause subagents to
 stall, because a backgrounded worker cannot answer a prompt. The dinostack installer offers
 to configure `bypassPermissions` mode in `~/.claude/settings.json`, pairing an allow list
-for routine tools with a deny list for destructive commands.
-
-Accept that setup when prompted. For the exact allow list, deny list, and additional
-directories, see the **Recommended permissions** section of the dinostack framework README.
+for routine tools with a deny list for destructive commands. Accept the installer's
+bypassPermissions setup when prompted. For the exact allow list, deny list, and additional
+directories, see https://docs.dinostack.ai#permissions .
 
 ## The mental model: conductor, worker, skeptic
 
-dinostack runs as a small team of roles. Understanding these three is enough to follow what
-your agent narrates as it works.
+Three roles are enough to follow what your agent narrates as it works.
 
-- **Conductor** - the main agent you talk to. It does not implement work directly. It
-  decomposes the task, decides how risky each piece is, delegates the actual editing to
-  workers, arranges review, and reports back. It stays available and focused on
-  coordination.
-- **Worker** - a focused subagent the conductor spawns to do one scoped piece of work (the
-  most common worker is the **engineer**, which writes and edits code). A worker gets a
-  narrow task and returns its result.
-- **Skeptic** - an independent reviewer the conductor spawns to adversarially check a
-  worker's output before it is accepted. The skeptic looks for correctness problems, missed
-  edge cases, and shortcuts, and either signs off or sends findings back for a fix.
+- **Conductor** - the main agent you talk to; it decomposes the task and delegates the
+  editing rather than implementing directly.
+- **Worker (engineer)** - a focused subagent spawned to make one scoped change.
+- **Skeptic** - an independent reviewer that adversarially checks the worker's output and
+  either signs off or returns findings.
 
-The loop you will see: the conductor classifies the task, spawns a worker to implement it,
-spawns a skeptic to review the result, loops on any findings until the skeptic signs off,
-and only then treats the work as done. On riskier changes you will also see a QA step that
-verifies behavior in a browser.
+The loop: classify, spawn a worker, spawn a skeptic, iterate until sign-off, with a browser
+QA step on riskier changes. For how these roles compose, see https://docs.dinostack.ai#agents.
 
 ## Risk classification, briefly
 
-Before doing anything, the conductor assigns the task a risk level, which decides how much
-review it gets:
-
-| Level | What it means | What it triggers |
-|---|---|---|
-| Trivial | One-file, fully reversible change with no behavioral or shared-state impact (a typo, a label, a color). | Delegated to an isolated engineer; no skeptic. |
-| Low | Reversible reads and exploration, or a single-file local change with no shared impact. | Direct action with a self-check; no skeptic. |
-| Elevated | Anything with real blast radius: multi-file changes, new files, behavioral effects, security or shared state, architecture decisions. | A worker implements and a fresh skeptic reviews. |
-
-When in doubt, the conductor classifies up, not down. Most of what you do in these
-exercises is Elevated, so expect to see the worker-plus-skeptic loop.
+The conductor assigns each task a risk level that decides how much review it gets. **Trivial**
+changes (a typo, a label, a color) go to an isolated engineer with no skeptic; **Low** changes
+(reversible reads, a single-file local edit) are direct action with a self-check; **Elevated**
+changes (multi-file or new files, behavioral effects, security, shared state, architecture) get
+a worker plus a fresh skeptic. When in doubt, the conductor classifies up; most exercise work is
+Elevated. See https://docs.dinostack.ai#risk for the full model.
 
 ## The command workflow
 
-Three commands carry most of the workflow:
+dinostack splits its commands into two groups: the few you type, and the ones the
+framework runs for you based on how risky your task is.
 
-- **`/brief`** - opens a planning dialogue to author a spec (the Brief) before any code is
-  written. Use it when you are starting from a blank page or an incomplete spec.
-- **`/implement-ticket`** - runs the full implementation loop for a task: plan, delegate to
-  a worker, review with a skeptic, run quality gates and QA, and open a pull request.
-- **`/skeptic`** - runs an adversarial review on its own, when you want a second set of
-  eyes on existing work without re-implementing it.
+**Commands you type**
 
-A worked micro-example of the routing you will see. Suppose you check out the intro branch
-and run `/implement-ticket`:
+- **`/implement-ticket`** - the workhorse you drive the exercises with. Point it at a
+  task and it runs the full loop: plan, delegate to a worker, review with a skeptic,
+  run quality gates and QA, and open a pull request.
+- **`/init-project`** - scaffolds a new project (you will not need it here; this repo
+  is already set up).
+- **`/wrap`** - summarizes a session and updates the project's memory when you finish.
+
+Occasionally useful: `/agentic-status`, `/agentic-help`, and `/pull-and-install`.
+
+**Commands the framework runs for you**
+
+- **`/brief`** - opens a planning dialogue to author a spec (a Brief) before any code
+  is written. The conductor invokes it automatically when your task needs a plan, so
+  you normally will not type it. You *can* run `/brief [topic]` to drive the spec
+  yourself - the advanced tier is a good place to try that.
+- **`/skeptic`** - adversarially reviews a worker's output. The conductor spawns it for
+  you inside `/implement-ticket`'s review loop on almost every change.
+
+So you mostly type `/implement-ticket`, and the framework runs `/brief` and `/skeptic`
+on your behalf based on risk. You can still invoke them by hand, but rarely need to.
+
+A worked micro-example: check out the intro branch and run `/implement-ticket`.
 
 ```
 Reading intro/TASK.md ...
@@ -183,8 +168,7 @@ Opening a pull request ...
 ```
 
 If a change is small and reversible, the conductor handles it directly without spawning
-subagents - that is the protocol working correctly on a cheap task, not a sign that
-something is off.
+subagents - that is the protocol working correctly on a cheap task.
 
 ## How the exercises work
 
@@ -237,12 +221,9 @@ git checkout intermediate
 Read `intermediate/TASK.md` - it is a **partial Brief**. The problem and the core API
 contract are filled in, but several decisions are deliberately left to you (state handling,
 where the entry point lives, and so on), called out under a "you decide" heading. Fill those
-gaps. You can do this in your head, or - better practice - use `/brief` to author the
-missing parts of the spec first:
-
-```
-/brief
-```
+gaps. You can do this in your head, or let the conductor open a planning dialogue for you
+when you run `/implement-ticket`. If you want to drive the spec explicitly first, you can run
+`/brief`, but you do not have to.
 
 Once the spec is complete, run:
 
@@ -261,12 +242,10 @@ git checkout advanced
 
 Read `advanced/TASK.md` - it is a **problem statement only** - and study the design assets
 under `advanced/design/` (a written spec plus screenshots that are the source of truth for
-the target screen). There is no Brief; you author it. Use `/brief` to turn the problem
-statement and design into a real spec:
-
-```
-/brief
-```
+the target screen). There is no Brief; you author it. When you run `/implement-ticket`, the
+conductor opens a planning dialogue and walks you through authoring that Brief. If you would
+rather drive the spec dialogue explicitly first, you can run `/brief` - but you do not have
+to.
 
 Then implement against it:
 
@@ -304,12 +283,10 @@ gates before you consider an exercise finished.
 There is no automated pass/fail grade in this crashcourse, by design. Success is
 observation-based: you and your pair look at the result and decide whether the outcome is
 acceptable. The intro tier has a clearly-correct end state (the counts match the rendered
-books); the intermediate and advanced tiers are more open, and "good enough" is a judgment
-call you make.
+books); the intermediate and advanced tiers are more open, and "good enough" is your call.
 
-The point is not to satisfy a grader. It is to practice spec-first planning and to build a
-feel for driving dinostack end-to-end, so that the judgment of what "done" means becomes
-yours.
+The point is not to satisfy a grader. It is to practice spec-first planning and build a feel
+for driving dinostack end-to-end, so the judgment of what "done" means becomes yours.
 
 ## Fork and clone
 
@@ -327,13 +304,15 @@ they copy to your fork automatically.
 
 ## Where to learn more
 
-- The [**DinoStack documentation**](https://docs.dinostack.ai) - the full command
-  reference, the complete recommended-permissions setup, the adapter list, and the deeper
-  protocol docs.
+- The [**DinoStack documentation**](https://docs.dinostack.ai) - a single anchored page
+  covering permissions, risk, git, config, agents, and flows (`#permissions`, `#risk`,
+  `#git`, `#config`, `#agents`, `#flows`).
+- The [**getting-started slide deck**](https://docs.dinostack.ai/slides/getting-started-slides.html) -
+  a walkthrough of the framework's core ideas.
+- `/agentic-help` - the in-terminal command reference; the canonical source for every
+  dinostack slash command.
 - The **DinoStack framework README** (in the `DinoStack` repository you installed from) -
-  the same reference material, alongside the source.
-- `/agentic-help` - a zero-token, static reference listing every dinostack slash command.
-- `/agentic-status` - reports how dinostack is currently activated in this project.
+  reference material alongside the source.
 - This repo's own `glossary.md` - the domain terms used in the Reading Room app. The
   dinostack role terms (conductor, worker, skeptic) are defined in the mental-model section
   above.
