@@ -1,4 +1,4 @@
-import { BookList } from "@/components/BookList";
+import { ReadingRoom } from "@/components/ReadingRoom";
 import { books } from "@/lib/books";
 
 export default function Home() {
@@ -12,7 +12,7 @@ export default function Home() {
         </p>
       </div>
 
-      <BookList books={books} />
+      <ReadingRoom seed={books} />
     </section>
   );
 }
