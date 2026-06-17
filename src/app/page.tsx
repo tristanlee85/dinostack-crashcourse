@@ -1,5 +1,4 @@
-import { BookList } from "@/components/BookList";
-import { books } from "@/lib/books";
+import { ReadingListPage } from "@/components/ReadingListPage";
 
 export default function Home() {
   return (
@@ -12,7 +11,7 @@ export default function Home() {
         </p>
       </div>
 
-      <BookList books={books} />
+      <ReadingListPage />
     </section>
   );
 }

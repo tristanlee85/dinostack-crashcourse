@@ -11,8 +11,9 @@
  *   (countByStatus, filterBooks), @/lib/types (Book, FilterValue), react
  *   (useState).
  *
- * Downstream consumers: src/app/page.tsx (the home route renders <BookList
- *   books={books} />).
+ * Downstream consumers: src/components/ReadingListPage.tsx (client shell that
+ *   passes the combined seed + added books array), previously also
+ *   src/app/page.tsx before the Add-a-book flow.
  *
  * Failure modes: pure client component; no I/O and no throwing on the typed
  *   input. Badge counts come straight from countByStatus(books) - they are not

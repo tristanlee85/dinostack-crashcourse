@@ -24,6 +24,9 @@ export function BookCard({ book }: BookCardProps) {
           {book.title}
         </h3>
         <p className="truncate text-sm text-slate-600">{book.author}</p>
+        {book.publishedYear != null ? (
+          <p className="text-xs text-slate-500">{book.publishedYear}</p>
+        ) : null}
         <span
           className={`mt-auto inline-flex w-fit rounded-full px-2.5 py-0.5 text-xs font-medium ${STATUS_BADGE_CLASSES[book.status]}`}
         >

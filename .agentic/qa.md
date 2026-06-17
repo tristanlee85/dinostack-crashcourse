@@ -18,5 +18,5 @@ Project-specific knowledge for QA runs. Read this before booting the app.
 
 ## Branch-specific expectations
 - `intro` branch: the filter-count bug is INTENDED to be visible - the "To Read" badge reads 3 but 4 cards show (and "Reading" reads 4 but shows 3), while "All" reads 9. On `intro`, that mismatch is the exercise, NOT a QA failure to fix; QA confirms the bug reproduces.
-- `intermediate` branch: app is unchanged from `main` (clean base, no new feature) - QA confirms the clean baseline.
+- `intermediate` branch: home page includes collapsible **Add a book** panel (Open Library search). QA verifies search, pick-result add flow, loading/empty/error states, and that the nine seeded books still appear with baseline badge counts (4/3/2) before any adds. After adding a book, counts should include the new `to-read` row.
 - `advanced` branch: `/discover` stays the bare placeholder - QA confirms it loads.
