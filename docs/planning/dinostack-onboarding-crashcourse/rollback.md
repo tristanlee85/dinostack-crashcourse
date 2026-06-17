@@ -1,4 +1,4 @@
-# Rollback: iridium Onboarding Crashcourse
+# Rollback: DinoStack Onboarding Crashcourse
 
 Greenfield repo with no production surface, no database, no external writes. Rollback is cheap and total at every level. Nothing here is irreversible.
 

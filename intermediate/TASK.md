@@ -10,7 +10,7 @@ lists the gaps you must close before you implement. Closing those gaps is the po
 you practice spec-first planning on a feature that is realistic but small.
 
 > New to the workflow? Read the root `README.md` first. It covers dinostack install, activation,
-> and the `/brief` -> `/implement-ticket` -> `/skeptic` loop. Then come back here.
+> and how the `/implement-ticket` workflow plans and reviews your work for you. Then come back here.
 
 ---
 
@@ -101,7 +101,7 @@ check for it, so write the manifest as you build the module, not after.
 ## You decide (author this part of the spec)
 
 These are deliberate gaps. Before you implement, decide each one and write it into your own Brief
-(running `/brief` is the recommended way to author it). There is no single correct answer - pick a
+(when you run `/implement-ticket`, the conductor opens a planning dialogue to help you author it; you can also open planning yourself with `/brief`). There is no single correct answer - pick a
 defensible option, state it, and build to it. The Skeptic will hold you to the spec you wrote, not to
 a hidden answer key.
 
@@ -134,9 +134,11 @@ a hidden answer key.
    Open the URL it prints (http://localhost:3000 by default). You should see the nine seeded books with
    working filter tabs - this is your clean starting point. No Add-a-book feature exists yet; building it
    is your job.
-3. Close the gaps. Decide each item under "You decide" above. The recommended path is to run `/brief`
-   and let it interview you into a finished spec that fills in the partial Brief - that is the spec-first
-   habit this tier is teaching.
+3. Close the gaps. Decide each item under "You decide" above. When you run `/implement-ticket` in the
+   next step, the conductor opens a planning dialogue and interviews you into a finished spec that fills
+   in the partial Brief - that is the spec-first habit this tier is teaching. If you want to author the
+   spec explicitly first, you can open planning yourself with `/brief`, but the workflow will prompt you
+   for it either way.
 4. Implement it:
    ```
    /implement-ticket

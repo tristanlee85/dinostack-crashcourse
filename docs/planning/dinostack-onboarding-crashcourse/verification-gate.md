@@ -1,4 +1,4 @@
-# Verification Gate: iridium Onboarding Crashcourse
+# Verification Gate: DinoStack Onboarding Crashcourse
 
 Every QA scenario and quality gate maps to a concrete closing unit. No "cannot specify" entries.
 
