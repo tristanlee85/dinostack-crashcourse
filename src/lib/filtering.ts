@@ -38,9 +38,9 @@ export function countByStatus(books: Book[]): Record<FilterValue, number> {
 
   for (const book of books) {
     if (book.status === "to-read") {
-      counts.reading += 1;
-    } else if (book.status === "reading") {
       counts["to-read"] += 1;
+    } else if (book.status === "reading") {
+      counts.reading += 1;
     } else {
       counts[book.status] += 1;
     }
