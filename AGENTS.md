@@ -21,7 +21,7 @@ agentic-engineering: opt-in
 
 ## Conventions
 - **Glossary** - see `glossary.md` for the project's domain terms (Ubiquitous Language).
-- Engineer-facing prose uses dinostack branding with the real current command names (`/brief`, `/implement-ticket`, `/skeptic`, etc.) and no em dashes.
+- Engineer-facing prose uses dinostack branding with the real current command names and no em dashes. The everyday user-typed commands are `/init-project`, `/implement-ticket`, and `/wrap`; `/brief` and `/skeptic` are real commands the conductor auto-runs based on risk (invocable by hand but rarely needed), so frame them as framework-run, not as routine commands the learner types.
 
 ## Session start
 - On the first interaction of a new session, silently check that `/init-project` scaffolding exists. Check each item only if its precondition holds:

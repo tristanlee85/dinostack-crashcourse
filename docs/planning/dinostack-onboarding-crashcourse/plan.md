@@ -1,17 +1,17 @@
-# Plan: iridium Onboarding Crashcourse
+# Plan: DinoStack Onboarding Crashcourse
 
 Plan-tier (11 Elevated units, single track). Assembled from Skeptic-approved upstream artifacts plus three conductor-authored coverage docs. Pending assembled-Plan Skeptic sign-off before the first engineer spawn.
 
 ## Components
-- **Brief:** `../iridium-onboarding-crashcourse.md` (operator-confirmed, committed)
-- **Architect plan:** `../iridium-onboarding-crashcourse-architect-plan.md` (Skeptic-approved, 2 rounds, committed)
+- **Brief:** `../dinostack-onboarding-crashcourse.md` (operator-confirmed, committed)
+- **Architect plan:** `../dinostack-onboarding-crashcourse-architect-plan.md` (Skeptic-approved, 2 rounds, committed)
 - **Orchestration:** `./orchestration.jsonl` (11-unit DAG, 5 waves, merge order, Skeptic strategy)
 - **Risk register:** `./risk-register.md`
 - **Rollback:** `./rollback.md`
 - **Verification gate:** `./verification-gate.md`
 
 ## One-screen summary
-Build the "Iridium Reading Room" Next.js app on `main` (U1-U7), finalize `main`, fork three standalone tier branches from the finalized-`main` SHA (`intro`/`intermediate`/`advanced`, U8-U10), then certify the README against shipped reality (U11). Observation-based onboarding course; no autograder. Stack: Next 16 / React 19 / TS 5 / Tailwind v4 / ESLint 9 (versions verified, ESLint held at 9 because eslint-config-next@16 breaks on ESLint 10).
+Build the "DinoStack Reading Room" Next.js app on `main` (U1-U7), finalize `main`, fork three standalone tier branches from the finalized-`main` SHA (`intro`/`intermediate`/`advanced`, U8-U10), then certify the README against shipped reality (U11). Observation-based onboarding course; no autograder. Stack: Next 16 / React 19 / TS 5 / Tailwind v4 / ESLint 9 (versions verified, ESLint held at 9 because eslint-config-next@16 breaks on ESLint 10).
 
 ## Hard barriers (sequencing invariants)
 1. **U1 merges before W2.** U2/U3 cannot build without installed deps + config.
